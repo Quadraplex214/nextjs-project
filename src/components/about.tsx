@@ -1,46 +1,153 @@
-'use client';
+"use client"
 
-import Image from "next/image";
-import { CardSpotlight } from "@/components/ui/card-spotlight";
-import { Meteors } from "@/components/ui/meteors";
-import { BackgroundGradient } from "@/components/ui/background-gradient";
+import { motion, useInView } from "framer-motion"
+import { useRef } from "react"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { MapPin, Mail, Phone, Github, Linkedin } from "lucide-react"
 
-export default function AboutMeClient({ info }:any) {
-    console.log('info', info);
-    return (
-        <div className="dark:bg-black-100">
-            <div className="relative container mx-auto px-4 py-24">
-                <CardSpotlight className="relative z-20 h-full overflow-hidden bg-gray-900">
-                    <div className="absolute inset-0 pointer-events-none">
-                        <Meteors number={30} />
-                    </div>
-                    <div className="flex flex-col md:flex-row gap-8 items-center">
-                        <div className="w-full md:w-2/5 lg:w-1/3">
-                            <BackgroundGradient className="aspect-[3/4] relative overflow-hidden rounded-lg bg-white dark:bg-zinc-900">
-                                <Image
-                                    src={`/Photo-Me.jpeg`}
-                                    alt="jordans"
-                                    height="300"
-                                    width="700"
-                                    className="object-contain"
-                                />
-                            </BackgroundGradient>
+export function About() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        duration: 0.6,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  }
+
+  return (
+    <section id="about" className="py-20 px-4 bg-slate-900/80 backdrop-blur-sm">
+      <div className="container mx-auto max-w-6xl">
+        <motion.div ref={ref} variants={containerVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
+          <motion.div variants={itemVariants} className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              About Me
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto"></div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div variants={itemVariants}>
+              <Card className="p-8 bg-gray-800/60 backdrop-blur-sm border-blue-500/20 hover:border-blue-400/40 transition-all duration-300">
+                <CardContent className="space-y-6">
+                  <motion.p className="text-lg leading-relaxed text-gray-300" variants={itemVariants}>
+                    I am extremely capable and passionate towards the work I do, I possess exquisite communication
+                    skills and value proper work ethics. Furthermore, I am a person that strives to experience new things
+                    and to perfect said experience.
+                  </motion.p>
+                  <motion.p className="text-lg leading-relaxed text-gray-300" variants={itemVariants}>
+                    Being able to easily conceptualize ideas and statements are other prominent qualities that I
+                    consider as one of my best strengths that I can easily apply toward any task given.
+                  </motion.p>
+                  <motion.div className="flex flex-wrap gap-2 pt-4" variants={itemVariants}>
+                    {["Full-Stack Developer", "QA Engineer", "Problem Solver"].map((badge, index) => (
+                      <motion.div
+                        key={badge}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                        transition={{ delay: 1 + index * 0.1, duration: 0.3 }}
+                      >
+                        <Badge
+                          variant="secondary"
+                          className="bg-blue-500/20 text-blue-300 border-blue-400/30 hover:bg-blue-500/30 transition-colors"
+                        >
+                          {badge}
+                        </Badge>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="space-y-6">
+              <Card className="p-6 bg-gray-800/60 backdrop-blur-sm border-blue-500/20 hover:border-blue-400/40 transition-all duration-300">
+                <CardContent className="space-y-4">
+                  <h3 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    Contact Information
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      { icon: MapPin, text: "Sharjah, UAE" },
+                      { icon: Mail, text: "josh.joshua.almeida@gmail.com" },
+                      { icon: Phone, text: "+971 58 839 0134" },
+                    ].map(({ icon: Icon, text }, index) => (
+                      <motion.div
+                        key={text}
+                        className="flex items-center gap-3 group"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                        transition={{ delay: 1.2 + index * 0.1, duration: 0.5 }}
+                      >
+                        <div className="p-2 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
+                          <Icon className="w-4 h-4 text-blue-400" />
                         </div>
-                        <div className="w-full md:w-3/5 lg:w-2/3 flex flex-col z-20 justify-center space-y-4">
-                            <h1 className="text-3xl font-bold">{info.name}</h1>
-                            <p className="text-lg text-muted-foreground">
-                                {info.proffesion}
-                            </p>
-                            <p className="text-muted-foreground">
-                                {info.about}
-                            </p>
-                            <p className="text-muted-foreground">
-                                {info.freetime}
-                            </p>
-                        </div>
-                    </div>
-                </CardSpotlight>
-            </div>
-        </div>
-    );
+                        <span className="text-gray-300 group-hover:text-blue-400 transition-colors">{text}</span>
+                      </motion.div>
+                    ))}
+
+                    <motion.div
+                      className="flex items-center gap-3 group"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                      transition={{ delay: 1.5, duration: 0.5 }}
+                    >
+                      <div className="p-2 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
+                        <Github className="w-4 h-4 text-blue-400" />
+                      </div>
+                      <a
+                        href="https://github.com/Quadraplex214"
+                        className="text-gray-300 hover:text-blue-400 transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        github.com/Quadraplex214
+                      </a>
+                    </motion.div>
+
+                    <motion.div
+                      className="flex items-center gap-3 group"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                      transition={{ delay: 1.6, duration: 0.5 }}
+                    >
+                      <div className="p-2 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
+                        <Linkedin className="w-4 h-4 text-blue-400" />
+                      </div>
+                      <a
+                        href="https://linkedin.com/in/joshua-almeida-a203112a0"
+                        className="text-gray-300 hover:text-blue-400 transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        LinkedIn Profile
+                      </a>
+                    </motion.div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
 }
