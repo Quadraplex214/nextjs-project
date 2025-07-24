@@ -20,7 +20,7 @@ const experiences = [
     current: true,
   },
   {
-    title: "Junior Frontend Developer (Internship)",
+    title: "Junior Frontend Developer",
     company: "Jadwelny",
     location: "Dubai, UAE",
     period: "10/2024 – 12/2025",

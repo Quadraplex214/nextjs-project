@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function Hero() {
@@ -17,9 +17,9 @@ export function Hero() {
     return () => window.removeEventListener("mousemove", updateMousePosition);
   }, []);
 
-  const scrollToAbout = () => {
-    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-  };
+//   const scrollToAbout = () => {
+//     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+//   };
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gray-900">
@@ -128,7 +128,7 @@ export function Hero() {
           transition={{ duration: 1, delay: 1.5 }}
           className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
         >
-          <motion.button
+          {/* <motion.button
             onClick={scrollToAbout}
             animate={{ y: [0, 10, 0] }}
             transition={{
@@ -140,7 +140,7 @@ export function Hero() {
           >
             <span className="text-sm">Scroll Down</span>
             <ChevronDown className="w-6 h-6" />
-          </motion.button>
+          </motion.button> */}
         </motion.div>
       </div>
     </section>
