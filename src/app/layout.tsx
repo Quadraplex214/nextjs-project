@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,10 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Script
+          src="https://storage.googleapis.com/website-translation-script/translator.js"
+          data-api-key="wt_ca5464d8459e44d1_s85cAJaTlwWpcCNiJ7NXOQ"
+        />
       </body>
     </html>
   );
